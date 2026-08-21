@@ -1,0 +1,26 @@
+services:
+  verbatim:
+    build:
+      context: .
+      args:
+        # Set to "true" to bake the embedding model into the image instead of
+        # downloading it on the first request.
+        PRELOAD_EMBEDDINGS: "false"
+    image: verbatim:local
+    ports:
+      - "8000:8000"
+    environment:
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      VERBATIM_LLM_MODEL: ${VERBATIM_LLM_MODEL:-claude-sonnet-5}
+      VERBATIM_EMBEDDING_PROVIDER: ${VERBATIM_EMBEDDING_PROVIDER:-sentence-transformers}
+      VERBATIM_VECTOR_STORE: chroma
+      VERBATIM_STORAGE_DIR: /data
+      VERBATIM_CORS_ORIGINS: http://localhost:8000,http://localhost:5173
+    volumes:
+      # The index, the catalogue and the embedding cache all live here. Losing
+      # it means re-ingesting and re-embedding everything.
+      - verbatim-data:/data
+    restart: unless-stopped
+
+volumes:
+  verbatim-data:
