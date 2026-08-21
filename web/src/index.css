@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply bg-ink-50 text-ink-900 antialiased dark:bg-ink-950 dark:text-ink-100;
+    font-feature-settings: "cv02", "cv03", "cv04", "ss01";
+  }
+
+  ::selection {
+    @apply bg-accent-500/25;
+  }
+
+  /* Scrollbars that do not fight the dark theme. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(148 163 184 / 0.35) transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-ink-300/50 dark:bg-ink-700/70;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent-500/60 ring-offset-2 ring-offset-ink-50 dark:ring-offset-ink-950;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply rounded-xl border border-ink-200/80 bg-white/80 shadow-sm backdrop-blur
+           dark:border-ink-800 dark:bg-ink-900/60;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[11px] font-medium
+           tracking-wide;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-medium
+           transition-colors disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent-600 text-white hover:bg-accent-700 active:bg-accent-800;
+  }
+
+  .btn-ghost {
+    @apply btn text-ink-600 hover:bg-ink-200/60 dark:text-ink-300 dark:hover:bg-ink-800;
+  }
+
+  /* The three-dot pulse shown while the first token is still in flight. */
+  .thinking-dot {
+    @apply h-1.5 w-1.5 rounded-full bg-ink-400 dark:bg-ink-500;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+}
