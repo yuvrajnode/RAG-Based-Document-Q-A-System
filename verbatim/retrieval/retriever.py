@@ -89,7 +89,7 @@ class Retriever:
         top_k = top_k or self.top_k
         query = query.strip()
         if not query or self.store.count() == 0:
-            return RetrievalResult([], 0, 0, 0, self._strategy_name())
+            return RetrievalResult([], 0, 0, 0, self.strategy_name())
 
         query_vector = self.embedder.embed_query(query)
         dense_hits = self.store.search(query_vector, self.candidate_k, document_ids=document_ids)
@@ -118,7 +118,7 @@ class Retriever:
 
         fused = self._fuse(dense_scores, lexical_scores)
         if not fused:
-            return RetrievalResult([], self._elapsed(started), len(dense_hits), 0, self._strategy_name())
+            return RetrievalResult([], self._elapsed(started), len(dense_hits), 0, self.strategy_name())
 
         ordered = sorted(fused.items(), key=lambda item: -item[1])
         pool = ordered[: max(self.candidate_k, top_k)]
@@ -158,7 +158,7 @@ class Retriever:
             took_ms=self._elapsed(started),
             dense_candidates=len(dense_scores),
             lexical_candidates=len(lexical_scores),
-            strategy=self._strategy_name(),
+            strategy=self.strategy_name(),
         )
 
     # --- helpers --------------------------------------------------------
@@ -174,7 +174,7 @@ class Retriever:
             return normalise(reciprocal_rank_fusion([dense_ranking, lexical_ranking], weights))
         return relative_score_fusion(dense, lexical, self.hybrid_alpha)
 
-    def _strategy_name(self) -> str:
+    def strategy_name(self) -> str:
         if self.hybrid_alpha >= 1.0:
             base = "dense"
         elif self.hybrid_alpha <= 0.0:

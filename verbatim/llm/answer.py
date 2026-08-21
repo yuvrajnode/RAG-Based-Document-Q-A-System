@@ -175,7 +175,7 @@ class AnswerEngine:
 
         citations = extract_citations(text, retrieval.chunks)
         yield "done", {
-            "citations": [c.__dict__ for c in citations],
+            "citations": [c.as_dict() for c in citations],
             "latency_ms": self._elapsed(started),
             "retrieval_ms": retrieval.took_ms,
             "strategy": retrieval.strategy,

@@ -134,6 +134,16 @@ class Citation:
     page: int | None
     snippet: str
 
+    def as_dict(self) -> dict[str, Any]:
+        return {
+            "marker": self.marker,
+            "chunk_id": self.chunk_id,
+            "document_id": self.document_id,
+            "document_title": self.document_title,
+            "page": self.page,
+            "snippet": self.snippet,
+        }
+
 
 @dataclass(slots=True)
 class Answer:
