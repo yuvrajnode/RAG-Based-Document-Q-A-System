@@ -146,6 +146,15 @@ class NumpyVectorStore(VectorStore):
             self._flush()
             return removed
 
+    def get(self, ids: list[str]) -> list[StoredChunk]:
+        with self._lock:
+            positions = {id_: i for i, id_ in enumerate(self._ids)}
+            return [
+                StoredChunk(id=id_, text=self._texts[positions[id_]], metadata=self._metadata[positions[id_]])
+                for id_ in ids
+                if id_ in positions
+            ]
+
     def iter_chunks(self) -> Iterator[StoredChunk]:
         with self._lock:
             snapshot = list(zip(self._ids, self._texts, self._metadata))

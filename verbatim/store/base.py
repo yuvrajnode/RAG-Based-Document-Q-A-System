@@ -46,6 +46,10 @@ class VectorStore(ABC):
     def delete_document(self, document_id: str) -> int: ...
 
     @abstractmethod
+    def get(self, ids: list[str]) -> list[StoredChunk]:
+        """Fetch chunks by id. Used to hydrate lexical hits the dense pass missed."""
+
+    @abstractmethod
     def iter_chunks(self) -> Iterator[StoredChunk]:
         """Every chunk in the index. The lexical index is rebuilt from this."""
 

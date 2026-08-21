@@ -98,6 +98,15 @@ class ChromaVectorStore(VectorStore):
             self._collection.delete(ids=ids)
         return len(ids)
 
+    def get(self, ids: list[str]) -> list[StoredChunk]:
+        if not ids:
+            return []
+        page = self._collection.get(ids=ids, include=["documents", "metadatas"])
+        return [
+            StoredChunk(id=id_, text=text or "", metadata=dict(meta or {}))
+            for id_, text, meta in zip(page.get("ids", []), page["documents"], page["metadatas"])
+        ]
+
     def iter_chunks(self) -> Iterator[StoredChunk]:
         offset, total = 0, self._collection.count()
         while offset < total:
