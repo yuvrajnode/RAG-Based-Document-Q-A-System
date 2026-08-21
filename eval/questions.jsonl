@@ -1,0 +1,17 @@
+# Retrieval test set for the sample corpus in ./samples.
+# Each line: a question, and substrings that a correct passage must contain.
+{"question": "How many days of annual leave do full-time employees get?", "expected": ["25 days of paid annual leave"]}
+{"question": "Can I carry unused holiday into next year?", "expected": ["carried into the following year", "before 31 March"]}
+{"question": "Which form do I use to claim expenses?", "expected": ["EX-114"]}
+{"question": "What is the mileage rate after 10,000 miles?", "expected": ["25 pence thereafter", "45 pence per mile"]}
+{"question": "When do I need a fit note?", "expected": ["fit note is required from"]}
+{"question": "How do I report a broken laptop?", "expected": ["SD-", "service desk"]}
+{"question": "What is the notice period for a grade 6 employee?", "expected": ["three months for grades 5"]}
+{"question": "What caused the dispatch API outage?", "expected": ["N+1", "one query per stop"]}
+{"question": "How long was the February outage?", "expected": ["96 minutes", "06:12 and 07:48"]}
+{"question": "Why did staging not catch the regression?", "expected": ["staging dataset averages three stops"]}
+{"question": "What is PLAT-2292?", "expected": ["PLAT-2292"]}
+{"question": "Why use hybrid retrieval instead of dense only?", "expected": ["rare literal tokens", "mirror-image failure"]}
+{"question": "What chunk size was chosen and why?", "expected": ["900 characters with 150 of overlap"]}
+{"question": "Was a cross-encoder reranker used?", "expected": ["No cross-encoder reranker"]}
+{"question": "What does lambda 0.65 control?", "expected": ["MMR at lambda 0.65"]}
