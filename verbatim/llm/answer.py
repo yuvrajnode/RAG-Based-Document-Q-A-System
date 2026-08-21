@@ -174,13 +174,16 @@ class AnswerEngine:
             text = "".join(collected)
 
         citations = extract_citations(text, retrieval.chunks)
-        yield "done", {
-            "citations": [c.as_dict() for c in citations],
-            "latency_ms": self._elapsed(started),
-            "retrieval_ms": retrieval.took_ms,
-            "strategy": retrieval.strategy,
-            "grounded": bool(citations),
-        }
+        yield (
+            "done",
+            {
+                "citations": [c.as_dict() for c in citations],
+                "latency_ms": self._elapsed(started),
+                "retrieval_ms": retrieval.took_ms,
+                "strategy": retrieval.strategy,
+                "grounded": bool(citations),
+            },
+        )
 
     @staticmethod
     def _elapsed(started: float) -> int:

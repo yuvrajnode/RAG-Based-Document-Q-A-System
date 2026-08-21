@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS embeddings (
 
 
 def _key(provider: str, model: str, text: str) -> str:
-    payload = f"{provider}\x1f{model}\x1f{text}".encode("utf-8")
+    payload = f"{provider}\x1f{model}\x1f{text}".encode()
     return hashlib.sha256(payload).hexdigest()
 
 

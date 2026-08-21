@@ -54,12 +54,16 @@ def format_context(chunks: list[RetrievedChunk]) -> str:
     )
 
 
-def build_user_prompt(question: str, chunks: list[RetrievedChunk], history: list[dict] | None = None) -> str:
+def build_user_prompt(
+    question: str, chunks: list[RetrievedChunk], history: list[dict] | None = None
+) -> str:
     sections = []
     if history:
         # Only the last few turns; older context competes with the passages for
         # the model's attention and rarely earns its tokens.
-        turns = "\n".join(f"{turn['role'].capitalize()}: {turn['content']}" for turn in history[-4:])
+        turns = "\n".join(
+            f"{turn['role'].capitalize()}: {turn['content']}" for turn in history[-4:]
+        )
         sections.append(f"Earlier in this conversation:\n{turns}")
     sections.append(f"Passages:\n\n{format_context(chunks)}")
     sections.append(f"Question: {question}")

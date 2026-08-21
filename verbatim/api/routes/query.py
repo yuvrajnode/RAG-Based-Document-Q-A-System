@@ -75,12 +75,12 @@ def ask_stream(request: AskRequest, service: RagService = Depends(service_depend
 
 
 @router.post("/search", response_model=SearchResponse)
-def search(request: SearchRequest, service: RagService = Depends(service_dependency)) -> SearchResponse:
+def search(
+    request: SearchRequest, service: RagService = Depends(service_dependency)
+) -> SearchResponse:
     """Retrieval without generation - useful for tuning, and for the UI's
     'show me what would be retrieved' panel."""
-    result = service.search(
-        request.query, top_k=request.top_k, document_ids=request.document_ids
-    )
+    result = service.search(request.query, top_k=request.top_k, document_ids=request.document_ids)
     return SearchResponse(
         query=request.query,
         results=[SourceChunk(**chunk.as_dict()) for chunk in result.chunks],

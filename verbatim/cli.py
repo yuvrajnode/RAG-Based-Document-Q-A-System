@@ -16,7 +16,9 @@ from rich.table import Table
 from verbatim import __version__
 from verbatim.service import RagService
 
-app = typer.Typer(help="Verbatim - retrieval-augmented Q&A over your documents.", no_args_is_help=True)
+app = typer.Typer(
+    help="Verbatim - retrieval-augmented Q&A over your documents.", no_args_is_help=True
+)
 console = Console()
 
 
@@ -91,8 +93,10 @@ def search(query: str = typer.Argument(...), top_k: int = typer.Option(8, "--top
             " ".join(chunk.text.split())[:70] + "...",
         )
     console.print(table)
-    console.print(f"[dim]{result.took_ms}ms - {result.dense_candidates} dense / "
-                  f"{result.lexical_candidates} lexical candidates")
+    console.print(
+        f"[dim]{result.took_ms}ms - {result.dense_candidates} dense / "
+        f"{result.lexical_candidates} lexical candidates"
+    )
 
 
 @app.command("list")
@@ -106,7 +110,11 @@ def list_documents() -> None:
     table = Table("Id", "Document", "Type", "Chunks", "Added")
     for record in records:
         table.add_row(
-            record.id[:8], record.title, record.source_type, str(record.chunk_count), record.created_at
+            record.id[:8],
+            record.title,
+            record.source_type,
+            str(record.chunk_count),
+            record.created_at,
         )
     console.print(table)
 
@@ -130,7 +138,9 @@ def stats() -> None:
     table.add_row("documents", str(data["documents"]))
     table.add_row("chunks", str(data["chunks"]))
     table.add_row("vector store", data["vector_store"])
-    table.add_row("embeddings", f"{data['embedding']['model']} (dim {data['embedding']['dimension']})")
+    table.add_row(
+        "embeddings", f"{data['embedding']['model']} (dim {data['embedding']['dimension']})"
+    )
     table.add_row("llm", data["llm"]["model"] or "not configured")
     table.add_row("retrieval", data["retrieval"]["strategy"])
     console.print(table)

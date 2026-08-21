@@ -100,7 +100,9 @@ class _HTTPEmbedder(Embedder):
         with httpx.Client(timeout=self._timeout) as client:
             for batch in batched(texts, self.batch_size):
                 response = client.post(
-                    self.endpoint, headers=self._headers(), json=self._payload(batch, is_query=is_query)
+                    self.endpoint,
+                    headers=self._headers(),
+                    json=self._payload(batch, is_query=is_query),
                 )
                 response.raise_for_status()
                 data = response.json()["data"]

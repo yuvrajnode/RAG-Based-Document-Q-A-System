@@ -8,8 +8,9 @@ used, because the provider choice belongs to this project's configuration.
 
 from __future__ import annotations
 
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 import numpy as np
 

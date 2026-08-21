@@ -34,7 +34,7 @@ def _spool(upload: UploadFile, destination: Path, limit: int) -> int:
                 handle.close()
                 destination.unlink(missing_ok=True)
                 raise HTTPException(
-                    status.HTTP_413_REQUEST_ENTITY_TOO_LARGE,
+                    413,
                     f"file exceeds the {limit // (1024 * 1024)}MB upload limit",
                 )
             handle.write(chunk)

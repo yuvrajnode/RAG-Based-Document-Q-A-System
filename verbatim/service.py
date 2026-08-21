@@ -49,7 +49,9 @@ class RagService:
             chunk_size=self.settings.chunk_size,
             chunk_overlap=self.settings.chunk_overlap,
         )
-        self.engine = AnswerEngine(self.retriever, create_client(self.settings), self.settings.llm_model)
+        self.engine = AnswerEngine(
+            self.retriever, create_client(self.settings), self.settings.llm_model
+        )
         self._write_lock = threading.Lock()
 
         log.info(

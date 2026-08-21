@@ -76,11 +76,17 @@ class IngestionPipeline:
 
         took = int((time.perf_counter() - started) * 1000)
         log.info(
-            "ingested %s: %d chunks, %d chars in %dms", path.name, len(chunks), record.char_count, took
+            "ingested %s: %d chunks, %d chars in %dms",
+            path.name,
+            len(chunks),
+            record.char_count,
+            took,
         )
         return IngestionResult(record=record, took_ms=took, replaced=existing is not None)
 
-    def ingest_directory(self, directory: str | Path, *, recursive: bool = True) -> list[IngestionResult]:
+    def ingest_directory(
+        self, directory: str | Path, *, recursive: bool = True
+    ) -> list[IngestionResult]:
         directory = Path(directory)
         if not directory.is_dir():
             raise NotADirectoryError(directory)

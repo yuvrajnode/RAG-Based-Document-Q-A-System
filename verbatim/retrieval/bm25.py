@@ -18,10 +18,43 @@ _TOKEN = re.compile(r"[a-z0-9][a-z0-9'._-]*")
 # Deliberately short. An aggressive stop list hurts exact-phrase questions
 # ("what is the state of the art") more than it helps.
 _STOPWORDS = frozenset(
-    """
-    a an and are as at be by for from has have how in is it its of on or that the
-    this to was were what when where which who will with your you
-    """.split()
+    [
+        "a",
+        "an",
+        "and",
+        "are",
+        "as",
+        "at",
+        "be",
+        "by",
+        "for",
+        "from",
+        "has",
+        "have",
+        "how",
+        "in",
+        "is",
+        "it",
+        "its",
+        "of",
+        "on",
+        "or",
+        "that",
+        "the",
+        "this",
+        "to",
+        "was",
+        "were",
+        "what",
+        "when",
+        "where",
+        "which",
+        "who",
+        "will",
+        "with",
+        "your",
+        "you",
+    ]
 )
 
 
@@ -54,7 +87,7 @@ class BM25Index:
     def __len__(self) -> int:
         return len(self._ids)
 
-    def build(self, documents: list[tuple[str, str]]) -> "BM25Index":
+    def build(self, documents: list[tuple[str, str]]) -> BM25Index:
         """documents: (chunk_id, text) pairs. Rebuilds from scratch."""
         self._ids = []
         self._lengths = []
@@ -95,8 +128,10 @@ class BM25Index:
             if idf <= 0.0:
                 continue
             for position, frequency in self._postings.get(term, ()):
-                length_norm = 1.0 - self.b + self.b * (
-                    self._lengths[position] / (self._average_length or 1.0)
+                length_norm = (
+                    1.0
+                    - self.b
+                    + self.b * (self._lengths[position] / (self._average_length or 1.0))
                 )
                 scores[position] += idf * (
                     frequency * (self.k1 + 1.0) / (frequency + self.k1 * length_norm)

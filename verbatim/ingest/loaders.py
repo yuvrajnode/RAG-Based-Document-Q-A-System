@@ -18,7 +18,17 @@ from verbatim.models import LoadedDocument, Segment
 
 log = get_logger(__name__)
 
-SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".txt", ".md", ".markdown", ".html", ".htm", ".csv", ".json"}
+SUPPORTED_EXTENSIONS = {
+    ".pdf",
+    ".docx",
+    ".txt",
+    ".md",
+    ".markdown",
+    ".html",
+    ".htm",
+    ".csv",
+    ".json",
+}
 
 _WS = re.compile(r"[ \t ]+")
 _BLANKS = re.compile(r"\n{3,}")

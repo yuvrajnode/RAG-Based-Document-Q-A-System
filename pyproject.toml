@@ -48,7 +48,9 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
-ignore = ["B008"]
+# B008: FastAPI Depends() in defaults is the framework idiom.
+# B905: zip() strict= would be noise on pairs we build ourselves.
+ignore = ["B008", "B905"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

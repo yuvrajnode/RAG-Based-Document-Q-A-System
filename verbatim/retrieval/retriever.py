@@ -118,7 +118,9 @@ class Retriever:
 
         fused = self._fuse(dense_scores, lexical_scores)
         if not fused:
-            return RetrievalResult([], self._elapsed(started), len(dense_hits), 0, self.strategy_name())
+            return RetrievalResult(
+                [], self._elapsed(started), len(dense_hits), 0, self.strategy_name()
+            )
 
         ordered = sorted(fused.items(), key=lambda item: -item[1])
         pool = ordered[: max(self.candidate_k, top_k)]

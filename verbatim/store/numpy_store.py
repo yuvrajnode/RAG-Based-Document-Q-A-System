@@ -11,8 +11,9 @@ from __future__ import annotations
 
 import json
 import threading
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Any, Iterator
+from typing import Any
 
 import numpy as np
 
@@ -150,7 +151,11 @@ class NumpyVectorStore(VectorStore):
         with self._lock:
             positions = {id_: i for i, id_ in enumerate(self._ids)}
             return [
-                StoredChunk(id=id_, text=self._texts[positions[id_]], metadata=self._metadata[positions[id_]])
+                StoredChunk(
+                    id=id_,
+                    text=self._texts[positions[id_]],
+                    metadata=self._metadata[positions[id_]],
+                )
                 for id_ in ids
                 if id_ in positions
             ]
