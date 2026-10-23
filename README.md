@@ -275,3 +275,8 @@ green immediately - no API key, no model download, no fixtures to build.
 - Follow-up questions carry conversation history into the prompt but not into
   retrieval, so "and for part-time staff?" retrieves on those words alone.
 
+
+## Contributing
+
+Issues and pull requests are welcome. Run `make test` and `make lint` before
+opening a PR so the suite stays green.
